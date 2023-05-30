@@ -42,8 +42,8 @@ class MainActivity : AppCompatActivity() {
                     binding.progressBar.visibility = View.VISIBLE
                     binding.btCalculate.isEnabled = false
                 }
-                is Result -> {
-                    binding.tvResult.text = it.result
+                is Factorial -> {
+                    binding.tvResult.text = it.value
                 }
             }
         }
