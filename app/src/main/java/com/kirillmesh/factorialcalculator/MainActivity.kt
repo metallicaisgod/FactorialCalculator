@@ -1,10 +1,9 @@
 package com.kirillmesh.factorialcalculator
 
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.kirillmesh.factorialcalculator.databinding.ActivityMainBinding
 
@@ -27,27 +26,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeViewModel(){
-        viewModel.error.observe(this){
-            if(it){
+    private fun observeViewModel() {
+        viewModel.state.observe(this) {
+            if (it.isError) {
                 Toast.makeText(
                     this,
                     "There is not number in edit text",
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        }
-        viewModel.progress.observe(this){
-            if(it){
+            if (it.isInProgress) {
                 binding.progressBar.visibility = View.VISIBLE
                 binding.btCalculate.isEnabled = false
             } else {
                 binding.progressBar.visibility = View.GONE
                 binding.btCalculate.isEnabled = true
             }
-        }
-        viewModel.result.observe(this){
-            binding.tvResult.text = it
+            binding.tvResult.text = it.result
         }
     }
 }
