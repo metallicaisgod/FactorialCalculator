@@ -28,21 +28,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.state.observe(this) {
-            if (it.isError) {
-                Toast.makeText(
-                    this,
-                    "There is not number in edit text",
-                    Toast.LENGTH_SHORT
-                ).show()
+            binding.progressBar.visibility = View.GONE
+            binding.btCalculate.isEnabled = true
+            when(it){
+                is Error -> {
+                    Toast.makeText(
+                        this,
+                        "There is not number in edit text",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is Progress -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.btCalculate.isEnabled = false
+                }
+                is Result -> {
+                    binding.tvResult.text = it.result
+                }
             }
-            if (it.isInProgress) {
-                binding.progressBar.visibility = View.VISIBLE
-                binding.btCalculate.isEnabled = false
-            } else {
-                binding.progressBar.visibility = View.GONE
-                binding.btCalculate.isEnabled = true
-            }
-            binding.tvResult.text = it.result
         }
     }
 }

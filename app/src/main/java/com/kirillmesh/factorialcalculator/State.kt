@@ -1,7 +1,7 @@
 package com.kirillmesh.factorialcalculator
 
-class State(
-    val isError: Boolean = false,
-    val isInProgress: Boolean = false,
-    val result: String = ""
-)
+sealed class State
+
+object Error: State()
+object Progress: State()
+class Result(val result: String): State()
